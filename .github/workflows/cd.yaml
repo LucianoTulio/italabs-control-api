@@ -1,16 +1,15 @@
-name: CD Gitops 
-
+name: cd-gitops 
 on: 
   push: 
     branches: [main]
 
   jobs: 
     build:
-      name: Build
+      name: build
       runs-on: ubuntu-latest 
 
       steps: 
-      -  name: Checkout code 
+      -  name: ceckout-code 
          uses: actions/checkout@v2
 
       -  name: Build nad push image to Dockerhub
