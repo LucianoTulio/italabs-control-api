@@ -1,25 +1,34 @@
-name: cd-gitops 
+name: Build and push Docker image
+on:
+  push:
+    branches:
+      - main
 
-on: 
-  push: 
-    branches: [main]
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  IMAGE_NAME: my-image-name
 
-jobs: 
+
+jobs:
   build:
-    name: build
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build Docker image
+        run: docker build -t ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest .
+        working-directory: .
 
-    steps: 
-    -  name: ceckout-code 
-      uses: actions/checkout@v2
-
-    -  name: Build nad push image to Dockerhub
-        uses: dicker/build-push-action@v1.1.0 
-        with: 
-          username: ${{ secrets.DOCKER_USERNAME }}
-          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ secrets.DOCKER_USERNAME }}/gitopsdd
-          tags: ${{ gitgub.sha }}  latest 
-
-      
+  push:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push Docker image
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+      - name: Push Docker image
+        run: docker push ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
         
