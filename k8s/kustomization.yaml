@@ -7,5 +7,5 @@ resources:
 
 images:
 - name: goserver
-  newName: wesleywillians/gitopsfc
+  newName: lucianotulio/gitopsdd
   newTag: newtag
