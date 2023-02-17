@@ -45,4 +45,3 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         repository: lucianotulio/italabs-control-api
-
