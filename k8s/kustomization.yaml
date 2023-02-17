@@ -6,4 +6,4 @@ resources:
 images:
 - name: goserver
   newName: lucianotulio/gitopsdd
-  newTag: 7656b0288557569f2df3511979225f53a59871dd
+  newTag: 82e2404abb947ce380ad1422677f014f10905bc0
